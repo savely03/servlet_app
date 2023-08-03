@@ -13,11 +13,13 @@ public class RequestPrinterService {
     public void printRequest(HttpServletRequest req) {
         System.out.printf("""
                          Получен запрос типа: %s,
+                         На адрес: %s
                          C заголовками: %s,
                          C параметрами: %s,
                          C телом: %s
                         """,
                 requestParser.parseMethodName(req),
+                requestParser.parseUrl(req),
                 requestParser.parseHeaders(req),
                 requestParser.parseParams(req),
                 requestParser.parseBody(req));

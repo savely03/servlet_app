@@ -15,6 +15,10 @@ public class RequestParserService {
         return req.getMethod();
     }
 
+    public String parseUrl(HttpServletRequest req) {
+        return req.getRequestURI();
+    }
+
     public String parseHeaders(HttpServletRequest req) {
         List<String> res = new ArrayList<>();
         Enumeration<String> headers = req.getHeaderNames();
