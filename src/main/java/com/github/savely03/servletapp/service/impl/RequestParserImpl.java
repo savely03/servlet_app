@@ -1,5 +1,6 @@
-package com.github.savely03.servletapp.service;
+package com.github.savely03.servletapp.service.impl;
 
+import com.github.savely03.servletapp.service.RequestParser;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
@@ -9,16 +10,27 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RequestParserService {
+public class RequestParserImpl implements RequestParser {
+    private static final RequestParser INSTANCE = new RequestParserImpl();
 
+    private RequestParserImpl() {
+    }
+
+    public static RequestParser getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
     public String parseMethodName(HttpServletRequest req) {
         return req.getMethod();
     }
 
+    @Override
     public String parseUrl(HttpServletRequest req) {
         return req.getRequestURI();
     }
 
+    @Override
     public String parseHeaders(HttpServletRequest req) {
         List<String> res = new ArrayList<>();
         Enumeration<String> headers = req.getHeaderNames();
@@ -31,6 +43,7 @@ public class RequestParserService {
         return String.join("\n,", res);
     }
 
+    @Override
     public String parseParams(HttpServletRequest req) {
         List<String> res = new ArrayList<>();
         Enumeration<String> params = req.getParameterNames();
@@ -43,6 +56,7 @@ public class RequestParserService {
         return String.join("\n,", res);
     }
 
+    @Override
     public String parseBody(HttpServletRequest req) {
         try (BufferedReader br = req.getReader()) {
             return br.lines().collect(Collectors.joining("\n"));
